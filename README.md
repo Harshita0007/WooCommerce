@@ -2,7 +2,7 @@
 
 A full-stack microservices application that integrates with WooCommerce's REST API to manage products and create custom segments using a text-based rule editor.
 
-## 🚀 Features
+##  Features
 
 - ✅ WooCommerce REST API integration
 - ✅ SQLite database for local storage
@@ -15,7 +15,7 @@ A full-stack microservices application that integrates with WooCommerce's REST A
 - ✅ Input validation and error handling
 - ✅ Unit tests
 
-## 🏗️ Architecture
+##  Architecture
 ```
 Frontend (React + Vite) - Port 3000
            |
@@ -26,14 +26,14 @@ Frontend (React + Vite) - Port 3000
                 SQLite Database
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Backend:** Node.js, Express, SQLite, Sequelize  
 **Frontend:** React 18, Vite, Tailwind CSS  
 **API Docs:** Swagger/OpenAPI  
 **Testing:** Jest, Supertest
 
-## 📦 Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 - Node.js 18+
@@ -88,7 +88,7 @@ curl -X POST http://localhost:3001/api/products/sync
 http://localhost:3000
 ```
 
-## 🔄 Product Ingestion Logic
+##  Product Ingestion Logic
 
 ### How It Works
 1. **Manual Trigger**: `POST /api/products/sync`
@@ -113,7 +113,7 @@ http://localhost:3000
 | `on_sale` | `on_sale` | Boolean |
 | `date_created` | `created_at` | ISO timestamp |
 
-## 🎯 Segment Rules
+##  Segment Rules
 
 ### Supported Operators
 - `=` Equal to
@@ -171,7 +171,7 @@ curl -X POST http://localhost:3002/api/segments/evaluate \
   -d '{"rules": "price > 100\nstock_status = instock"}'
 ```
 
-## 🧪 Testing
+##  Testing
 ```bash
 cd backend/services/product-service
 npm test
@@ -179,7 +179,7 @@ npm test
 
 **Results:** 2/2 tests passing ✅
 
-## 🔧 Environment Variables
+##  Environment Variables
 
 **Product Service (.env)**
 ```bash
@@ -205,7 +205,7 @@ VITE_PRODUCT_SERVICE_URL=http://localhost:3001
 VITE_SEGMENT_SERVICE_URL=http://localhost:3002
 ```
 
-## 🤖 AI Usage Notes
+##  AI Usage Notes
 
 This project was developed with assistance from **Claude AI (Anthropic)**.
 
@@ -234,7 +234,7 @@ This project was developed with assistance from **Claude AI (Anthropic)**.
 6. Added custom features beyond requirements
 7. Performed end-to-end testing
 
-## 📁 Project Structure
+##  Project Structure
 ```
 woocommerce-segmentation/
 ├── backend/
@@ -246,7 +246,7 @@ woocommerce-segmentation/
 └── README.md
 ```
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 **Database Issues**
 ```bash
@@ -267,34 +267,12 @@ taskkill /PID <PID> /F
 - Verify WooCommerce API is accessible
 - Check console logs for errors
 
-## 🔐 WooCommerce Test Store
+##  WooCommerce Test Store
 
 - **URL**: https://wp-multisite.convertcart.com
 - **API Docs**: https://woocommerce.github.io/woocommerce-rest-api-docs/
 - **Credentials**: Demo keys included in code (safe for testing)
 
-## 📝 License
 
-MIT
 
-## 👤 Author
 
-Your Name  
-GitHub: [@yourusername](https://github.com/yourusername)
-```
-
----
-
-## **Step 2: Create .gitignore**
-
-Create `.gitignore` in root folder:
-```
-node_modules/
-.env
-*.sqlite
-dist/
-build/
-*.log
-.DS_Store
-package-lock.json
-coverage/
