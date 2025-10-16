@@ -16,24 +16,45 @@ function App() {
     const loadProducts = async () => {
         try {
             setLoading(true);
-            const data = await getProducts();
-            setProducts(data);
             setError(null);
+            const data = await getProducts();
+
+            // Ensure data is an array
+            if (Array.isArray(data)) {
+                setProducts(data);
+            } else {
+                console.error('❌ Products data is not an array:', data);
+                setProducts([]);
+                setError('Received invalid data format from server');
+            }
         } catch (err) {
-            setError('Failed to load products. Please try again.');
-            console.error(err);
+            setError(err.message || 'Failed to load products. Please try again.');
+            console.error('❌ Load products error:', err);
+            setProducts([]); // Set empty array on error
         } finally {
             setLoading(false);
         }
     };
 
     const handleSegmentResult = (result) => {
-        setFilteredProducts(result);
+        // Validate result data
+        if (result && Array.isArray(result.data)) {
+            setFilteredProducts(result);
+        } else {
+            console.error('❌ Invalid segment result:', result);
+            setError('Received invalid segment result');
+        }
     };
 
     const handleReset = () => {
         setFilteredProducts(null);
+        setError(null);
     };
+
+    // Safely get products to display
+    const displayProducts = filteredProducts !== null
+        ? (Array.isArray(filteredProducts.data) ? filteredProducts.data : [])
+        : (Array.isArray(products) ? products : []);
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -58,7 +79,18 @@ function App() {
 
                 {error && (
                     <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
-                        <p className="text-red-800">{error}</p>
+                        <div className="flex justify-between items-start">
+                            <p className="text-red-800">{error}</p>
+                            <button
+                                onClick={() => {
+                                    setError(null);
+                                    loadProducts();
+                                }}
+                                className="text-red-600 hover:text-red-800 text-sm font-medium"
+                            >
+                                Retry
+                            </button>
+                        </div>
                     </div>
                 )}
 
@@ -68,7 +100,7 @@ function App() {
                     </div>
                 ) : (
                     <ProductList
-                        products={filteredProducts !== null ? filteredProducts.data : products}
+                        products={displayProducts}
                         isFiltered={filteredProducts !== null}
                         resultInfo={filteredProducts}
                     />

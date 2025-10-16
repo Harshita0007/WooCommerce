@@ -1,9 +1,8 @@
-
 import axios from 'axios';
 
 // Get URLs from environment variables
-const PRODUCT_SERVICE_URL = import.meta.env.VITE_PRODUCT_SERVICE_URL ;
-const SEGMENT_SERVICE_URL = import.meta.env.VITE_SEGMENT_SERVICE_URL ;
+const PRODUCT_SERVICE_URL = import.meta.env.VITE_PRODUCT_SERVICE_URL;
+const SEGMENT_SERVICE_URL = import.meta.env.VITE_SEGMENT_SERVICE_URL;
 
 // Debug logging (will show in browser console)
 console.log('🔧 API Configuration:');
@@ -85,9 +84,25 @@ export const getProducts = async () => {
   try {
     console.log('🔄 Fetching products...');
     const response = await productAPI.get('/api/products');
-    const products = response.data.data || response.data;
+    
+    // Extract products from response
+    let products = response.data.data || response.data;
+    
+    // Ensure it's an array
+    if (!Array.isArray(products)) {
+      console.error('❌ Products is not an array:', products);
+      // If it's an object with a data property, try that
+      if (products && typeof products === 'object' && Array.isArray(products.data)) {
+        products = products.data;
+      } else {
+        console.warn('⚠️ Returning empty array');
+        return [];
+      }
+    }
+    
     console.log(`✅ Fetched ${products.length} products`);
     return products;
+    
   } catch (error) {
     console.error('❌ Error fetching products:', error);
     
@@ -127,18 +142,23 @@ export const evaluateSegment = async (rules) => {
     const rulesText = Array.isArray(rules) ? rules.join('\n') : rules;
 
     const response = await segmentAPI.post('/api/segments/evaluate', {
-      rules: rulesText,   // Send as JSON { rules: "..." }
+      rules: rulesText,
     });
 
     console.log('✅ Segment evaluation completed', response.data);
+    
+    // Validate response structure
+    if (!response.data || !Array.isArray(response.data.data)) {
+      console.error('❌ Invalid segment response structure:', response.data);
+      throw new Error('Invalid response from segment service');
+    }
+    
     return response.data;
   } catch (error) {
     console.error('❌ Error evaluating segment:', error);
     throw new Error(error.response?.data?.error || error.message || 'Failed to evaluate segment');
   }
 };
-
-
 
 // Health check functions
 export const checkProductServiceHealth = async () => {
