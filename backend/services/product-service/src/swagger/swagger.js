@@ -10,7 +10,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:3001',
+        url: 'https://product-service-zrts.onrender.com',
         description: 'Development server'
       }
     ],
