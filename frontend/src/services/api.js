@@ -2,8 +2,8 @@
 import axios from 'axios';
 
 // Get URLs from environment variables
-const PRODUCT_SERVICE_URL = import.meta.env.VITE_PRODUCT_SERVICE_URL || 'http://localhost:3001';
-const SEGMENT_SERVICE_URL = import.meta.env.VITE_SEGMENT_SERVICE_URL || 'http://localhost:3002';
+const PRODUCT_SERVICE_URL = import.meta.env.VITE_PRODUCT_SERVICE_URL ;
+const SEGMENT_SERVICE_URL = import.meta.env.VITE_SEGMENT_SERVICE_URL ;
 
 // Debug logging (will show in browser console)
 console.log('🔧 API Configuration:');
