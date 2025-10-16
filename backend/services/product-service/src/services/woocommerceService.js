@@ -27,7 +27,7 @@ class WooCommerceService {
 
   async syncProducts() {
     try {
-      console.log('🔄 Starting product sync...');
+      console.log(' Starting product sync...');
       let page = 1;
       let hasMore = true;
       let totalSynced = 0;
@@ -59,13 +59,13 @@ class WooCommerceService {
           totalSynced++;
         }
 
-        console.log(`✅ Synced page ${page}, total: ${totalSynced} products`);
+        console.log(`Synced page ${page}, total: ${totalSynced} products`);
         page++;
         
         if (page > 10) hasMore = false;
       }
 
-      console.log(`🎉 Sync completed! Total products synced: ${totalSynced}`);
+      console.log(` Sync completed! Total products synced: ${totalSynced}`);
       return { success: true, totalSynced };
     } catch (error) {
       console.error('Sync error:', error.message);

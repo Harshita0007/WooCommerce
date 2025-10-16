@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Using SQLite (no server needed)
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './database.sqlite',

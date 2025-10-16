@@ -29,7 +29,7 @@ const Product = sequelize.define('Product', {
     allowNull: true
   },
   tags: {
-    type: DataTypes.TEXT,  // Changed from ARRAY to TEXT
+    type: DataTypes.TEXT,  
     allowNull: true,
     defaultValue: '[]',
     get() {
