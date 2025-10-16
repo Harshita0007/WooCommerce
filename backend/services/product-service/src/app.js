@@ -16,8 +16,7 @@ app.use(helmet());
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://woocommerce-frontend-ajsa.onrender.com', // Your frontend URL
-    'https://*.onrender.com' // Allow all Render subdomains
+    'https://woocommerce-frontend-ajsa.onrender.com', // Your frontend 
   ],
   credentials: true
 }));
