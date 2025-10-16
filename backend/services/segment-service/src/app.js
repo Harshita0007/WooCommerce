@@ -11,7 +11,14 @@ const app = express();
 const PORT = process.env.PORT || 3002;
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://woocommerce-frontend-ajsa.onrender.com', // Your frontend URL
+    'https://*.onrender.com' // Allow all Render subdomains
+  ],
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
