@@ -1,15 +1,11 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Using SQLite (no server needed)
+// Use in-memory SQLite for Render (shares data via API calls)
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './database.sqlite',
+  storage: ':memory:',
   logging: false
 });
-
-sequelize.authenticate()
-  .then(() => console.log('✅ Database connected successfully'))
-  .catch(err => console.error('❌ Unable to connect to database:', err));
 
 module.exports = sequelize;

@@ -1,9 +1,10 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
+// Use in-memory SQLite for Render (data resets on restart)
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './database.sqlite',
+  storage: ':memory:',
   logging: false
 });
 
