@@ -123,22 +123,21 @@ export const syncProducts = async () => {
 
 export const evaluateSegment = async (rules) => {
   try {
-    console.log('🔄 Evaluating segment with rules:', rules);
-
-    // Convert rules array to newline-separated string
+    // Convert rules array to newline string if needed
     const rulesText = Array.isArray(rules) ? rules.join('\n') : rules;
 
-    const response = await segmentAPI.post('/api/segments/evaluate', rulesText, {
-      headers: { 'Content-Type': 'text/plain' } // important
+    const response = await segmentAPI.post('/api/segments/evaluate', {
+      rules: rulesText,   // Send as JSON { rules: "..." }
     });
 
-    console.log('✅ Segment evaluation completed');
+    console.log('✅ Segment evaluation completed', response.data);
     return response.data;
   } catch (error) {
     console.error('❌ Error evaluating segment:', error);
     throw new Error(error.response?.data?.error || error.message || 'Failed to evaluate segment');
   }
 };
+
 
 
 // Health check functions
