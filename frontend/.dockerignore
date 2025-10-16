@@ -1,0 +1,12 @@
+### For Frontend
+
+Create `frontend/.dockerignore`:
+```
+node_modules
+npm-debug.log
+.env
+.env.local
+.git
+.gitignore
+*.md
+dist

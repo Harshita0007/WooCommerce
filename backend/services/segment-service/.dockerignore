@@ -1,0 +1,12 @@
+
+Create `.dockerignore` in each service folder:
+```
+node_modules
+npm-debug.log
+.env
+.git
+.gitignore
+*.md
+coverage
+*.sqlite
+```

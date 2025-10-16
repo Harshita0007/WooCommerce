@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  product-service:
+    build:
+      context: ./backend/services/product-service
+      dockerfile: Dockerfile
+    container_name: product-service
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    volumes:
+      - product-data:/app
+    restart: unless-stopped
+
+  segment-service:
+    build:
+      context: ./backend/services/segment-service
+      dockerfile: Dockerfile
+    container_name: segment-service
+    environment:
+      - NODE_ENV=production
+      - PORT=3002
+    ports:
+      - "3002:3002"
+    volumes:
+      - product-data:/app
+    depends_on:
+      - product-service
+    restart: unless-stopped
+
+  cron-service:
+    build:
+      context: ./backend/cron-service
+      dockerfile: Dockerfile
+    container_name: cron-service
+    environment:
+      - NODE_ENV=production
+      - PRODUCT_SERVICE_URL=http://product-service:3001
+      - SYNC_INTERVAL=3600000
+    depends_on:
+      - product-service
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    environment:
+      - VITE_PRODUCT_SERVICE_URL=http://localhost:3001
+      - VITE_SEGMENT_SERVICE_URL=http://localhost:3002
+    ports:
+      - "3000:80"
+    depends_on:
+      - product-service
+      - segment-service
+    restart: unless-stopped
+
+volumes:
+  product-data:
+```
+
