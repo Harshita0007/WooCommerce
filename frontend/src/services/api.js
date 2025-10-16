@@ -124,7 +124,14 @@ export const syncProducts = async () => {
 export const evaluateSegment = async (rules) => {
   try {
     console.log('🔄 Evaluating segment with rules:', rules);
-    const response = await segmentAPI.post('/api/segments/evaluate', { rules });
+
+    // Convert rules array to newline-separated string
+    const rulesText = Array.isArray(rules) ? rules.join('\n') : rules;
+
+    const response = await segmentAPI.post('/api/segments/evaluate', rulesText, {
+      headers: { 'Content-Type': 'text/plain' } // important
+    });
+
     console.log('✅ Segment evaluation completed');
     return response.data;
   } catch (error) {
@@ -132,6 +139,7 @@ export const evaluateSegment = async (rules) => {
     throw new Error(error.response?.data?.error || error.message || 'Failed to evaluate segment');
   }
 };
+
 
 // Health check functions
 export const checkProductServiceHealth = async () => {
